@@ -3,6 +3,7 @@ import movies from '../data/movies.js';
 import AddMovie from './AddMovie.jsx';
 import MovieList from './MovieList.jsx';
 import Search from './Search.jsx';
+import { TMDB_API, fetchURL } from '../api/tmdbAPI.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -36,21 +37,27 @@ class App extends React.Component {
   }
 
   addMovieClick(e) {
-    if (e.length > 0) {
-      const newList = [...this.state.movieList];
-      newList.push({
-        title: e,
-        watched: false,
-        info: {
-          year: 2000,
-          runTime: '101 min',
-        }
+    const newList = [...this.state.movieList];
+    fetch(`https://api.themoviedb.org/3/movie/${e}?api_key=${TMDB_API}`)
+      .then(response => response.json())
+      .then(data => {
+        newList.push({
+          title: data.title,
+          watched: false,
+          info: {
+            year: parseInt(data.release_date),
+            runTime: data.runtime,
+            rating: data.vote_average,
+            metaScore: data.popularity,
+            img: `http://image.tmdb.org/t/p/w200${data.poster_path}`
+          },
+        });
       });
-      this.setState({
-        movieList: newList,
-        filteredList: newList
-      });
-    }
+
+    this.setState({
+      movieList: newList,
+      filteredList: newList
+    });
   }
 
   toggleWatchedMovie(title) {
@@ -68,9 +75,12 @@ class App extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="container">
         <div className="movieListTitle">
           <h2>Movie List</h2>
+          <div>
+            <AddMovie addMovieClick={this.addMovieClick.bind(this)} />
+          </div>
           <div className="buttonWrapper" style={{ display: "flex" }}>
             <div
               className="watchedBtn"
@@ -78,16 +88,15 @@ class App extends React.Component {
               style={{ color: 'blue', padding: "10px" }}
             >
               Watched
-          </div>
+            </div>
             <div
               className="notWatchedBtn"
               onClick={() => this.setState({ watched: false })}
               style={{ color: 'red', padding: "10px" }}
             >
               Not Watched
+            </div>
           </div>
-          </div>
-          <div><AddMovie addMovieClick={this.addMovieClick.bind(this)} /></div>
           <div><Search searchClickHandler={this.searchClickHandler.bind(this)} /></div>
         </div>
         <MovieList
