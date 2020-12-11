@@ -20,7 +20,7 @@ class Search extends React.Component {
     return (
       <form className="searchBar">
         <input type="text" placeholder='Search...' onChange={this.onChangeHandler.bind(this)} />
-        <button className="btn btn-success btn-sm" type="button" onClick={() => this.props.searchClickHandler(this.state.input)} >Go!</button>
+        <button className="inputBtn" type="button" onClick={() => this.props.searchClickHandler(this.state.input)} >Go!</button>
       </form>
     )
   }

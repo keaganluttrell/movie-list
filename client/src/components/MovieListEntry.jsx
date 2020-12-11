@@ -6,7 +6,7 @@ const MovieListEntry = (props) => {
 
   return (
     <div className='MovieListEntry'>
-      <span onClick={() => setToggle(!toggle)}>{props.movie.title}</span>
+      <div class="MVLETitle" onClick={() => setToggle(!toggle)}>{props.movie.title}</div>
       {toggle ? <MovieInfo movie={props.movie} watchToggle={props.watchToggle} /> : null}
     </div>
   );

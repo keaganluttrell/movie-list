@@ -1,5 +1,4 @@
 import React from 'react';
-import movies from '../data/movies.js';
 import AddMovie from './AddMovie.jsx';
 import MovieList from './MovieList.jsx';
 import Search from './Search.jsx';
@@ -75,34 +74,42 @@ class App extends React.Component {
   render() {
 
     return (
-      <div className="container">
+      <div className="appWrapper">
         <div className="movieListTitle">
-          <h2>Movie List</h2>
-          <div>
+
+          <div className="appTitle"><span>Keagan's Movie List</span></div>
+
+          <div className="addMovie">
             <AddMovie addMovieClick={this.addMovieClick.bind(this)} />
           </div>
-          <div className="buttonWrapper" style={{ display: "flex" }}>
+
+          <div className="buttonWrapper" >
             <div
               className="watchedBtn"
               onClick={() => this.setState({ watched: true })}
-              style={{ color: 'blue', padding: "10px" }}
             >
               Watched
             </div>
+
             <div
               className="notWatchedBtn"
               onClick={() => this.setState({ watched: false })}
-              style={{ color: 'red', padding: "10px" }}
             >
               Not Watched
             </div>
+
+            <div className="searcher">
+              <Search searchClickHandler={this.searchClickHandler.bind(this)} />
+            </div>
           </div>
-          <div><Search searchClickHandler={this.searchClickHandler.bind(this)} /></div>
+
         </div>
-        <MovieList
-          movies={this.state.filteredList.filter(item => item.watched === this.state.watched)}
-          watchToggle={this.toggleWatchedMovie.bind(this)}
-        />
+        <div className="list">
+          <MovieList
+            movies={this.state.filteredList.filter(item => item.watched === this.state.watched)}
+            watchToggle={this.toggleWatchedMovie.bind(this)}
+          />
+        </div>
       </div>
     )
   }

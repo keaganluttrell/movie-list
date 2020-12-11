@@ -52,7 +52,7 @@ class AddMovie extends React.Component {
         <datalist id="addOptions">
           {this.state.searchMovies.map((movie, index) => <option value={movie.title} key={movie.title + index} />)}
         </datalist>
-        <button className="btn btn-success btn-sm" type="button" onClick={this.onClickHandler.bind(this)} >Add Movie!</button>
+        <button className="inputBtn" type="button" onClick={this.onClickHandler.bind(this)} >Add Movie!</button>
       </form>
     )
   }
