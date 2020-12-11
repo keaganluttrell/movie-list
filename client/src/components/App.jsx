@@ -36,6 +36,7 @@ class App extends React.Component {
   }
 
   addMovieClick(e) {
+    console.log(this.state.movieList);
     const newList = [...this.state.movieList];
     fetch(`https://api.themoviedb.org/3/movie/${e}?api_key=${TMDB_API}`)
       .then(response => response.json())
@@ -48,15 +49,14 @@ class App extends React.Component {
             runTime: data.runtime,
             rating: data.vote_average,
             metaScore: data.popularity,
-            img: `http://image.tmdb.org/t/p/w200${data.poster_path}`
+            img: `http://image.tmdb.org/t/p/w200${data.poster_path}`.includes('null') ? null : `http://image.tmdb.org/t/p/w200${data.poster_path}`
           },
         });
+        this.setState({
+          movieList: newList,
+          filteredList: newList
+        });
       });
-
-    this.setState({
-      movieList: newList,
-      filteredList: newList
-    });
   }
 
   toggleWatchedMovie(title) {

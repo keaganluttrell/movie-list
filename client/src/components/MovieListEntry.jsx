@@ -6,7 +6,11 @@ const MovieListEntry = (props) => {
 
   return (
     <div className='MovieListEntry'>
-      <div class="MVLETitle" onClick={() => setToggle(!toggle)}>{props.movie.title}</div>
+      <div className="MVLETitle"
+        style={{
+          backgroundColor: props.movie.watched ? `lightblue` : `rgb(240, 150, 128)`
+        }}
+        onClick={() => setToggle(!toggle)}>{props.movie.title}</div>
       {toggle ? <MovieInfo movie={props.movie} watchToggle={props.watchToggle} /> : null}
     </div>
   );

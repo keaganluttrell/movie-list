@@ -12,7 +12,7 @@ const MovieInfo = (props) => (
         <input type="radio" checked={props.movie.watched} onChange={() => { }} />
       </div>
     </div>
-    <div className="img"><img src={props.movie.info.img} /></div>
+<div className="img"><img src={props.movie.info.img ? props.movie.info.img : "/client/src/data/default-placeholder-image.png"} /></div>
   </div>
 );
 
